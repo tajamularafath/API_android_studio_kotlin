@@ -1,6 +1,7 @@
 package com.example.api
 
 import android.app.Activity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ class MyAdapter(val context: Activity, val productArrayList: List<Product>):Recy
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(context).inflate(R.layout.eachitem, parent, false)
+        Log.d("OnCreateViewHolder","Running Each Time ")
         return MyViewHolder(itemView)
     }
 
@@ -23,9 +25,12 @@ class MyAdapter(val context: Activity, val productArrayList: List<Product>):Recy
 
 //        Using Picasso
         Picasso.get().load(currentItem.thumbnail).into(holder.image)
+        Log.d("onBindViewHolder","Running onBindViewHolder ")
+
     }
 
     override fun getItemCount(): Int {
+        Log.d("getItemCount","Running getItemCount ")
         return productArrayList.size
     }
 

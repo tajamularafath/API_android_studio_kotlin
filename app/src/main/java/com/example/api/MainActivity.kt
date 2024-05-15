@@ -6,6 +6,8 @@ import android.util.Log
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.delay
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,6 +26,15 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recyclerView)
 
+
+        var arraylist = ArrayList<Product>()
+
+        arraylist.add(Product("www.google.com","Honda ZA12"))
+
+        myAdapter = MyAdapter(this@MainActivity, arraylist)
+        recyclerView.adapter = myAdapter
+        recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+
         val retrofitBuilder = Retrofit.Builder()
             .baseUrl("https://dummyjson.com/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -32,15 +43,33 @@ class MainActivity : AppCompatActivity() {
 
         val retrofitData = retrofitBuilder.getProductData()
 
+        val fbtn = findViewById<FloatingActionButton>(R.id.fbtn)
+
+        fbtn.setOnClickListener {
+            val nowItemIndex = arraylist[1]
+            nowItemIndex.title = "Apple z0"
+            myAdapter.notifyItemChanged(1)
+        }
 
         retrofitData.enqueue(object : Callback<MyData?> {
+
             override fun onResponse(call: Call<MyData?>, response: Response<MyData?>) {
                 var responseBody = response.body()
                 val productList = responseBody?.products!!
+                arraylist.addAll(productList)
 
-                myAdapter = MyAdapter(this@MainActivity, productList)
-                recyclerView.adapter = myAdapter
-                recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+                arraylist.add(Product("www.google.com","Zero ZA12"))
+                myAdapter.notifyDataSetChanged()
+
+//                delay(5000)
+//                val nowItemIndex = arraylist[2]
+//                nowItemIndex.title = "Apple 00"
+
+
+//                myAdapter.notifyItemChanged(arraylist.size)
+//                myAdapter.run {
+//                    Log.e("notifyDataSetChanged=>","-->"+ notifyDataSetChanged().toString())
+//                }
             }
 
             override fun onFailure(call: Call<MyData?>, t: Throwable) {
