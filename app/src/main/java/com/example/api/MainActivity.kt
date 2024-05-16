@@ -49,6 +49,38 @@ class MainActivity : AppCompatActivity() {
             val nowItemIndex = arraylist[1]
             nowItemIndex.title = "Apple z0"
             myAdapter.notifyItemChanged(1)
+
+            if(arraylist.size > 2){
+            arraylist.remove(arraylist[2])
+            myAdapter.notifyItemRemoved(2)
+
+            } else{
+                Log.d("ArrayList=>", "ArrayList size is less than 3, cannot remove item at index 2");
+            }
+//            Adding By Index / notifyItemInserted
+            val newProduct = Product("Hero Phone","Hero Phone")
+            arraylist.add(0,newProduct)
+            myAdapter.notifyItemInserted(0)
+
+//            notifyItemRangeRemoved
+            if (arraylist.size>3) {
+                arraylist.remove(arraylist[0])
+                arraylist.remove(arraylist[1])
+                arraylist.remove(arraylist[2])
+                myAdapter.notifyItemRangeRemoved(0, 3)
+            } else{
+                Log.d("notifyItemRangeRemoved=>", "ArrayList size is less than 3, cannot remove item at index 2");
+
+            }
+
+//            adding 3 list and notifying the adapter using notifyItemRangeInserted
+            val newProduct1 = Product("Hero 1","Hero 1")
+            val newProduct2 = Product("Hero 2","Hero 2")
+            val newProduct3 = Product("Hero 3","Hero 3")
+            arraylist.add(0,newProduct1)
+            arraylist.add(1,newProduct2)
+            arraylist.add(2,newProduct3)
+            myAdapter.notifyItemRangeInserted(0,3)
         }
 
         retrofitData.enqueue(object : Callback<MyData?> {
