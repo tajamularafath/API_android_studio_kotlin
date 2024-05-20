@@ -7,6 +7,10 @@ android {
     namespace 'com.example.api'
     compileSdk 34
 
+    buildFeatures{
+        viewBinding true
+    }
+
     defaultConfig {
         applicationId "com.example.api"
         minSdk 24
@@ -43,7 +47,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     //    ViewModel Dependency
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.0"
+
+//    LiveData Dependency:
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.0")
 
 //    Retrofit Dependency
     implementation 'com.squareup.retrofit2:retrofit: 2.9.0'
@@ -53,4 +60,6 @@ dependencies {
 
     // picasso for loading images in my Image View
     implementation 'com.squareup.picasso:picasso:2.8'
+
+
 }
